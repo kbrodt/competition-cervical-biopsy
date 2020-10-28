@@ -1,0 +1,5 @@
+/assets
+/effnet*
+/data
+*.csv
+*.ipynb
