@@ -2,15 +2,9 @@ import itertools as it
 
 import apex
 import efficientnet_pytorch
-import timm
-# 
+
 
 def get_model(config):
-    # return timm.create_model(config.network.name,
-        # in_chans=3,
-        # num_classes=config.network.num_classes,
-        # pretrained=True,
-    # )
     return efficientnet_pytorch.EfficientNet.from_pretrained(
         config.network.name,
         num_classes=config.network.num_classes,

@@ -75,7 +75,6 @@ def concat_tiles(tiles, n_tiles, image_size):
                 this_img = tiles[idxes[i]]
             else:
                 this_img = np.ones((image_size, image_size, 3), dtype="uint8") * 255
-            # this_img = 255 - this_img
 
             h1 = h * image_size
             w1 = w * image_size
@@ -97,7 +96,7 @@ class DS(torch.utils.data.Dataset):
 
     def __getitem__(self, index):
         item = self.df.iloc[index]
-        img = read_img(self.root / item.filename)  # , page=self.config.train.page)
+        img = read_img(self.root / item.filename)
         img, _ = get_tiles(
             img,
             tile_size=self.tile_size,
@@ -140,7 +139,6 @@ def perform_inference(input_metadata, submission_format):
         n_augs = n_models * (tta + 1)
         logging.info(f'#augs {n_augs}')
 
-        # ds = DS(input_metadata, DATA_ROOT / "train", n_tiles=n_tiles, tile_size=tile_size)
         ds = DS(input_metadata, DATA_ROOT, n_tiles=n_tiles, tile_size=tile_size)
         loader = torch.utils.data.DataLoader(
             ds,
@@ -153,8 +151,6 @@ def perform_inference(input_metadata, submission_format):
 
         preds = []
         with torch.no_grad():
-            # import tqdm
-            # for x, y in tqdm.tqdm(loader):
             for x, y in loader:
                 x = to_gpu(x)
                 bs = len(x)
@@ -165,9 +161,6 @@ def perform_inference(input_metadata, submission_format):
 
                 logits /= n_augs
                 preds.extend(logits.cpu().numpy())
-                # preds = logits.sum(-1).round().long().cpu().numpy()
-                # for pred, filename in zip(preds, y):
-                    # submission_format.loc[filename, str(pred)] = 1
                     
         all_preds.append(preds)
         

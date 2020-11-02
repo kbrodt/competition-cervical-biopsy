@@ -1,4 +1,5 @@
 import argparse
+import copy
 from pathlib import Path
 
 import torch
@@ -25,11 +26,7 @@ def epoch_step(loader, desc, model, metrics):
             x = to_gpu(x)
             y = to_gpu(y)
 
-            # masks = []
             logits = model(x)
-            # masks.append(logits)
-
-            # preds = torch.stack(masks, 0).mean(0)
 
             for metric in metrics.values():
                 metric.update(logits, y)
@@ -62,8 +59,6 @@ def main():
 
     work_dir = path_to_load.parent
 
-    import copy
-
     state_dict = copy.deepcopy(checkpoint["state_dict"])
     for p in checkpoint["state_dict"]:
         if p.startswith("module."):
@@ -82,7 +77,6 @@ def main():
     traced_model.save(str(work_dir / f"model_{path_to_load.stem}.pt"))
     del traced_model
     del model
-    # return
 
     dev_loader = get_loaders(args, test_only=True)
     metrics = {"score": Score(), "acc": Accuracy()}

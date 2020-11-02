@@ -95,7 +95,7 @@ def concat_tiles(tiles, n_tiles, image_size, rand=False, transform=None):
                 this_img = tiles[idxes[i]]
             else:
                 this_img = np.ones((image_size, image_size, 3), dtype="uint8") * 255
-            # this_img = 255 - this_img
+
             if transform is not None:
                 this_img = transform(this_img)
 
