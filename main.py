@@ -8,8 +8,9 @@ import torch
 
 DATA_ROOT = Path(__file__).parent / "data"
 
-logging.basicConfig(format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',
-                    level=logging.INFO)
+logging.basicConfig(
+    format="%(asctime)s:%(name)s:%(levelname)s:%(message)s", level=logging.INFO
+)
 
 
 def to_gpu(inp, gpu=0):
@@ -89,7 +90,9 @@ class DS(torch.utils.data.Dataset):
         self.root = root
         self.n_tiles = n_tiles
         self.tile_size = tile_size
-        logging.info(f'Dataset with #tiles: {self.n_tiles}, tile size: {self.tile_size}')
+        logging.info(
+            f"Dataset with #tiles: {self.n_tiles}, tile size: {self.tile_size}"
+        )
 
     def __len__(self):
         return len(self.df)
@@ -129,15 +132,15 @@ def perform_inference(input_metadata, submission_format):
         (64, 192),
         (144, 128),
     ]:
-        model_path = (Path("assets") / f'{tile_size}')
-        logging.info(f'Reading models from {model_path}')
+        model_path = Path("assets") / f"{tile_size}"
+        logging.info(f"Reading models from {model_path}")
         models = [
             torch.jit.load(str(p)).cuda().eval()
             for p in model_path.rglob("model_best.pt")
         ]
         n_models = len(models)
         n_augs = n_models * (tta + 1)
-        logging.info(f'#augs {n_augs}')
+        logging.info(f"#augs {n_augs}")
 
         ds = DS(input_metadata, DATA_ROOT, n_tiles=n_tiles, tile_size=tile_size)
         loader = torch.utils.data.DataLoader(
@@ -161,10 +164,10 @@ def perform_inference(input_metadata, submission_format):
 
                 logits /= n_augs
                 preds.extend(logits.cpu().numpy())
-                    
+
         all_preds.append(preds)
-        
-    all_preds = np.array(all_preds).mean(0).sum(-1).round().astype('int')
+
+    all_preds = np.array(all_preds).mean(0).sum(-1).round().astype("int")
     for pred, filename in zip(all_preds, input_metadata.filename.values):
         submission_format.loc[filename, str(pred)] = 1
 
