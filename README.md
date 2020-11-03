@@ -38,7 +38,9 @@ bash ./train_all.sh
 ```
 
 On 1 GPU Tesla V100 it will take around 2-3 weeks. If you have more GPUs,
-you can [parallelize it](https://www.gnu.org/software/parallel/).
+you can [parallelize it](https://www.gnu.org/software/parallel/). Actually,
+you do not need to train all ~250 epochs, because the best models on validation
+are on ~25 epoch. So you can reduce training to 2-3 days.
 
 To generate torch scrips models run
 
@@ -49,8 +51,8 @@ bash ./validate_all.sh
 #### Test
 
 Once the model trained run the following command to do inference on test.
-Or you can also download the trained models from [yandex disk](),
-unzip into `assets` folder and run
+Or you can also download the trained models from [yandex disk](https://yadi.sk/d/85zam_5YNLTcQg),
+unzip and run
 
 ```bash
 python main.py
