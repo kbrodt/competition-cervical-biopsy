@@ -40,6 +40,12 @@ bash ./train_all.sh
 On 1 GPU Tesla V100 it will take around 2-3 weeks. If you have more GPUs,
 you can [parallelize it](https://www.gnu.org/software/parallel/).
 
+To generate torch scrips models run
+
+```bash
+bash ./validate_all.sh
+```
+
 #### Test
 
 Once the model trained run the following command to do inference on test.
