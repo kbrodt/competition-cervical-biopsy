@@ -42,7 +42,7 @@ you can [parallelize it](https://www.gnu.org/software/parallel/). Actually,
 you do not need to train all ~250 epochs, because the best models on validation
 are on ~25 epoch. So you can reduce training to 2-3 days.
 
-To generate torch scrips models run
+To generate traced models run
 
 ```bash
 bash ./validate_all.sh
