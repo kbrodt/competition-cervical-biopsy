@@ -74,7 +74,7 @@ and then stack top K tiles/crops into one image.
 
 The pipeline is illustrated in the figure below
 
-| original | with grid | stacked top K tiles |
+| C07_B016_S21, page=p4 (`5008x5456`) | grid with `128x128` tiles | stacked top 144 tiles (`1536x1536`) |
 |---|---|---|
 | ![](./imgs/C07_B016_S21_p4_5008_5456_small.JPG) | ![](./imgs/C07_B016_S21_p4_5008_5456_grid_small.JPG)| ![](./imgs/C07_B016_S21_p4_5008_5456_s128_t144_small.JPG) |
 
